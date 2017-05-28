@@ -35,6 +35,24 @@ pub struct Token {
     scope: String,
 }
 
+impl Token {
+    pub fn access_token(&self) -> &str {
+        &self.access_token
+    }
+
+    pub fn token_type(&self) -> &str {
+        &self.token_type
+    }
+
+    pub fn expires_in(&self) -> u32 {
+        self.expires_in
+    }
+
+    pub fn scope(&self) -> &str {
+        &self.scope
+    }
+}
+
 #[derive(Debug, PartialEq)]
 pub enum GrantType {
     ClientCredentials,
