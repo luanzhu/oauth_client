@@ -10,7 +10,7 @@ extern crate hyper;
 
 use std::convert::From;
 
-use hyper::status::StatusCode;
+use hyper::StatusCode;
 use tokio_core::reactor::Core;
 use roadrunner::{RestClient, RestClientMethods};
 
@@ -143,7 +143,7 @@ impl<'a> OAuthClient<'a> {
                             .execute_on(core)
                             .map_err(|e| Error::RestClientError(e))
                             .and_then(|response| {
-                                if *response.status() == hyper::status::StatusCode::Ok {
+                                if *response.status() == hyper::StatusCode::Ok {
                                     response.content()
                                         .as_typed::<Token>()
                                         .map_err(|e| Error::RestClientError(e))
