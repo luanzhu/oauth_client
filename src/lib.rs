@@ -9,6 +9,7 @@ extern crate roadrunner;
 extern crate hyper;
 
 use std::convert::From;
+use std::fmt::{Display, Formatter};
 
 use hyper::StatusCode;
 use tokio_core::reactor::Core;
@@ -24,6 +25,16 @@ pub enum Error {
 impl From<roadrunner::Error> for Error {
     fn from(err: roadrunner::Error) -> Self {
         Error::RestClientError(err)
+    }
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
+        match *self {
+            Error::FieldNotSuppliedError(ref err) => write!(f, "Missing required field: {}", err),
+            Error::NoneOkStatusCodeError(code) => write!(f, "Non-200 http code returned: {}", code),
+            Error::RestClientError(ref err) => write!(f, "RestClient error: {}", err),
+        }
     }
 }
 
